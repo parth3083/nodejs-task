@@ -14,18 +14,26 @@ services:
       - DB_NAME=SchoolManagement
     depends_on:
       - mysql
+    networks:
+      - app-network
 
   mysql:
     image: mysql:8.0
     container_name: mysql
     restart: always
     ports:
-      - "3306:3306"
+      - "3306:3306" # Corrected MySQL port mapping
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: SchoolManagement
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
